@@ -7,8 +7,8 @@ from torch.utils.data import DataLoader
 def process_images():
 
 	train_data = MNIST(root = '.', train=True, download=False)	
-	# load_train = DataLoader(train_data, shuffle=True)
-	print([x for x,y in train_data])
+	for x in train_data:
+		x[0].show()
 	image_final = np.array([Image.open(x) for x,y in load_train])
 	return image_final
 
