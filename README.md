@@ -1,2 +1,2 @@
 # PersistenceRecognition
-Image Recognition by Persistent Homology of Image
+Image Recognition by Persistent Homology
