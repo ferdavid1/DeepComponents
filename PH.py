@@ -1,28 +1,24 @@
 import numpy as np
-from torch.autograd import Variable
+import pandas as pd
+from betti import SimplicialComplex
+from PIL import Image
 from torchvision.datasets import MNIST
-from torchvision.transforms import ToTensor, ToPILImage
-from torch.utils.data import DataLoader
 
 def process_images():
-
 	train_data = MNIST(root = '.', train=True, download=False)	
-	for x in train_data:
-		x[0].show()
-	image_final = np.array([Image.open(x) for x,y in load_train])
-	return image_final
+	df = pd.DataFrame()	
+	df['images'] = [np.array(x)*255 for x,y in train_data]
+	df['labels'] = [y for x,y in train_data]
+	return df['images'].values, df['labels'].values
 
-def find_betti_numbers():
-	pass
+def find_betti_numbers(image_array): # find betti numbers of image array
+	sc = SimplicialComplex(image_array)
+	print(sc.betti_number(0))
+	
 def PersistentHomology():
 	data = process_images()
-	for batch in data:
-		for image in batch:
-			image = image.numpy()
-			print(image)
-			a = Image.fromarray(image*255)
-			a.show()
-			# find_betti_numbers()
-import matplotlib.pyplot as plt 
-from PIL import Image
+	images, labels = data[0], data[1]
+	for image in images:
+		find_betti_numbers(image)
+
 PersistentHomology()
