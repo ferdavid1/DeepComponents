@@ -11,14 +11,35 @@ def process_images():
 	df['labels'] = [y for x,y in train_data]
 	return df['images'].values, df['labels'].values
 
-def find_betti_numbers(image_array): # find betti numbers of image array
-	sc = SimplicialComplex(image_array)
-	print(sc.betti_number(0))
-	
+def morse(image_array): # plot image values as a signal, turned into a morse function 
+	connected_components = []
+	across_column_connectedness = []
+	for x in image_array:
+		cc = 0
+		ccs = []
+		for value in x:
+			if value != 0:
+				cc += 1
+			elif value == 0 and cc > 0:
+				ccs.append(cc)
+				cc = 0
+		connected_components.append(ccs)
+	new_connected = []
+	for c in connected_components:
+		if c == []:
+			new_connected.append(0)
+		else:
+			for x in c:
+				new_connected.append(x)
+	return new_connected
+
 def PersistentHomology():
 	data = process_images()
 	images, labels = data[0], data[1]
-	for image in images:
-		find_betti_numbers(image)
+	df = pd.DataFrame()
+	structures = []
+	df['ImageStructure'] = [morse(image) for image in images]
+	df['ImageLabels'] = labels 
+	df.to_csv('ImageTopologyDataset.csv', index=False)
 
 PersistentHomology()
