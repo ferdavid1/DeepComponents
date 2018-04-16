@@ -12,17 +12,18 @@ def pad_component_arrays(x):
     # across images, the max connected_components size is 750, 
     # upper_lim = max([len(x) for x in train_x]) this is 750
     upper_lim = 750
-    output_x = np.array([np.pad(np.array(array, dtype='int32'), 750-len(array), mode='constant', constant_values=0) for array in x])
+    output_x = np.array([np.pad(array, upper_lim-len(array), mode='constant', constant_values=0) for array in x])
     return output_x
 
-def load_train_data():
+def load_data():
     data = pd.read_csv('ImageTopologyDataset.csv')
     train_x = data['ImageStructure'].values
+    train_y = data['ImageLabels'].values
     train_x = list(map(literal_eval, train_x))
-    train_x = torch.from_numpy(pad_component_arrays(train_x))
+    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
     return train_x
 
-train_x = load_train_data()
+train_x, train_y = load_data()
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
 N, D_in, H, D_out = len(train_x), 94, 47, 10 
@@ -31,17 +32,18 @@ model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
+print('made it')
 for i in range(2000):
-    y_pred = model(train_x)
-    print('a')
-# 	lossed = loss(y_pred, labels)
-# 	print(i, lossed.data[0])
-# 	optim.zero_grad()
-# 	lossed.backward()
-# 	optim.step()
-# 	for param in model.parameters():
-# 		param.data -= learning_rate * param.grad.data
-	        
-#     if i%200 == 0:
-#         print("Error:" + str(loss))
-# torch.save(model, 'firsttry.pt')
+    for ind, image in train_x:
+        y_pred = model(image)
+        lossed = loss(y_pred, train_y[ind])
+        print(i, lossed.data[0])
+        optim.zero_grad()
+        lossed.backward()
+        optim.step()
+        for param in model.parameters():
+            param.data -= learning_rate * param.grad.data
+    	        
+        if i%200 == 0:
+            print("Error:" + str(loss))
+    torch.save(model, 'firsttry.pt')
