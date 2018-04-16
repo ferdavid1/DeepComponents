@@ -16,9 +16,9 @@ def load_data():
     train_x = data['ImageStructure'].values
     train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
+    upper_lim = max([len(x) for x in train_x])
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
     train_x = list(map(Variable, [x.float() for x in train_x]))
-    upper_lim = max([len(x) for x in train_x])
     return train_x, train_y
 
 train_x, train_y = load_data()
