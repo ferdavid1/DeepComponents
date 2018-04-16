@@ -34,7 +34,7 @@ learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
 for i in range(2000):
     for ind, image in enumerate(train_x):
-        print(type(image))
+        image = image.view(image.shape(0), 750)
         y_pred = model(image)
         lossed = loss(y_pred, train_y[ind])
         print(i, lossed.data[0])
