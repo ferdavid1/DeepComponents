@@ -1,8 +1,6 @@
 import torch 
 from torch.autograd import Variable
 from torchvision.datasets import MNIST
-from torchvision.transforms import ToTensor
-from torch.utils.data import DataLoader
 import torch.optim as optim
 import pandas as pd 
 import numpy as np
@@ -10,7 +8,6 @@ from ast import literal_eval
 
 global upper_lim
 def pad_component_arrays(x):
-    upper_lim = max([len(x) for x in train_x])
     output_x = np.array([np.pad(array, upper_lim-len(array), mode='constant', constant_values=0) for array in x])
     return output_x
 
@@ -21,6 +18,7 @@ def load_data():
     train_x = list(map(literal_eval, train_x))
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
     train_x = list(map(Variable, [x.float() for x in train_x]))
+    upper_lim = max([len(x) for x in train_x])
     return train_x, train_y
 
 train_x, train_y = load_data()
