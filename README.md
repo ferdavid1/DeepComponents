@@ -9,7 +9,7 @@ Image Recognition by Persistent Homology
 - Thus for each NxN image there exists an N-dimensional vector
 - MNIST data is 784-dimensional. 
 - For 28x28 data,a log_2_(784) = 9.6 = 10-length vector is needed to accurately represent its features. 
-- This process reduces dimensionality of MNIST to 28-D
+- This process reduces dimensionality of MNIST to 750-dimensional.
 
 ## Neural Network
 - PyTorch
