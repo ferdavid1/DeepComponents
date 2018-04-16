@@ -12,7 +12,7 @@ def pad_component_arrays(x):
     # across images, the max connected_components size is 750, 
     # upper_lim = max([len(x) for x in train_x]) this is 750
     upper_lim = 750
-    output_x = np.array([np.pad(np.array(array, dtype='int32'), 750-len(array), mode='constant', constant_values=0) for array in x], dtype='int32')
+    output_x = np.array([np.pad(np.array(array, dtype='int32'), 750-len(array), mode='constant', constant_values=0) for array in x])
     return output_x
 
 def load_train_data():
