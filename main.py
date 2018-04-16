@@ -21,7 +21,7 @@ def load_data():
     train_y = data['ImageLabels'].values
     train_x = list(map(literal_eval, train_x))
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
-    return train_x
+    return train_x, train_y
 
 train_x, train_y = load_data()
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
@@ -46,4 +46,4 @@ for i in range(2000):
     	        
         if i%200 == 0:
             print("Error:" + str(loss))
-    torch.save(model, 'firsttry.pt')
+torch.save(model, 'firsttry.pt')
