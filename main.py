@@ -8,10 +8,9 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 
+upper_lim = 750
 def pad_component_arrays(x):
-    # across images, the max connected_components size is 750, 
     # upper_lim = max([len(x) for x in train_x]) this is 750
-    upper_lim = 750
     output_x = np.array([np.pad(array, upper_lim-len(array), mode='constant', constant_values=0) for array in x])
     return output_x
 
@@ -27,8 +26,7 @@ def load_data():
 train_x, train_y = load_data()
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
-D = train_x.shape(1)
-N, D_in, H, D_out = len(train_x), D, int(D/2), 10 
+N, D_in, H, D_out = len(train_x), upper_lim, int(upper_lim/2), 10 
 model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out))
 # model = torch.load('firsttry.pt')
 loss = torch.nn.CrossEntropyLoss()
