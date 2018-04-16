@@ -18,7 +18,7 @@ def pad_component_arrays(x):
 def load_data():
     data = pd.read_csv('ImageTopologyDataset.csv')
     train_x = data['ImageStructure'].values
-    train_y = data['ImageLabels'].values
+    train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
     return train_x, train_y
