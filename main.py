@@ -17,11 +17,11 @@ def pad_component_arrays(x, upper_lim):
 def load_data():
     data = pd.read_csv('ImageTopologyDataset.csv')
     train_x = data['ImageStructure'].values
-    train_y = torch.from_numpy(data['ImageLabels'].values)
+    train_y = Variable(torch.from_numpy(data['ImageLabels'].values), requires_grad=False)
     train_x = list(map(literal_eval, train_x))
-    upper_lim = max([len(x) for x in train_x])
+    # upper_lim = max([len(x) for x in train_x])
+    upper_lim = 750
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
-    print([len(x) for x in train_x])
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
