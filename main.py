@@ -6,8 +6,7 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 
-global upper_lim
-def pad_component_arrays(x):
+def pad_component_arrays(x, upper_lim):
     output_x = np.array([np.pad(array, upper_lim-len(array), mode='constant', constant_values=0) for array in x])
     return output_x
 
@@ -17,11 +16,11 @@ def load_data():
     train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
     upper_lim = max([len(x) for x in train_x])
-    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
+    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
     train_x = list(map(Variable, [x.float() for x in train_x]))
-    return train_x, train_y
+    return train_x, train_y, upper_lim
 
-train_x, train_y = load_data()
+train_x, train_y, upper_lim = load_data()
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
 N, D_in, H, D_out = len(train_x), upper_lim, int(upper_lim/2), 10 
