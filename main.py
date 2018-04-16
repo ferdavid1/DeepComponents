@@ -21,6 +21,7 @@ def load_data():
     train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
+    train_x = list(map(Variable, train_x))
     return train_x, train_y
 
 train_x, train_y = load_data()
@@ -34,6 +35,7 @@ learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
 for i in range(2000):
     for ind, image in enumerate(train_x):
+        print(type(image))
         y_pred = model(image)
         lossed = loss(y_pred, train_y[ind])
         print(i, lossed.data[0])
