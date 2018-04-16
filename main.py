@@ -7,13 +7,12 @@ import numpy as np
 from ast import literal_eval
 
 def pad_component_arrays(x, upper_lim):
-    # output_x = np.array([np.pad(array, abs(upper_lim-len(array)), mode='constant', constant_values=0) for array in x])
     input_x = np.array(x)
     output_x = []
     for array in input_x:
         array += [0]*(upper_lim-len(array))
         output_x.append(array)
-    return output_x
+    return np.array(output_x)
 
 def load_data():
     data = pd.read_csv('ImageTopologyDataset.csv')
