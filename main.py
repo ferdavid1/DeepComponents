@@ -12,15 +12,14 @@ def pad_component_arrays(x):
     # across images, the max connected_components size is 750, 
     # upper_lim = max([len(x) for x in train_x]) this is 750
     upper_lim = 750
-    output_x = [np.pad(array, 750-len(array), mode='constant', constant_values=0) for array in x]
+    output_x = np.array([np.pad(array, 750-len(array), mode='constant', constant_values=0) for array in x], dtype='int32')
     return output_x
 
 def load_train_data():
     data = pd.read_csv('ImageTopologyDataset.csv')
     train_x = data['ImageStructure'].values
     train_x = list(map(literal_eval, train_x))
-    train_x = pad_component_arrays(train_x)
-    train_x = torch.Tensor(train_x)
+    train_x = torch.from_numpy(pad_component_arrays(train_x))
     return train_x
 
 train_x = load_train_data()
@@ -33,7 +32,7 @@ loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
 for i in range(2000):
-	y_pred = model(train_x)
+    y_pred = model(train_x)
     print('a')
 # 	lossed = loss(y_pred, labels)
 # 	print(i, lossed.data[0])
