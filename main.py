@@ -32,7 +32,6 @@ model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
-print('made it')
 for i in range(2000):
     for ind, image in enumerate(train_x):
         y_pred = model(image)
