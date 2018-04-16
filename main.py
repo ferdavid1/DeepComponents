@@ -47,5 +47,5 @@ for i in range(2000):
             param.data -= learning_rate * param.grad.data
     	        
         if i%200 == 0:
-            print("Error:" + str(loss))
+            print("Error:" + str(lossed))
 torch.save(model, 'firsttry.pt')
