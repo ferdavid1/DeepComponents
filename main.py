@@ -21,13 +21,14 @@ def load_data():
     train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x)))
-    train_x = list(map(Variable, train_x))
+    train_x = list(map(Variable, [x.to_float() for x in train_x]))
     return train_x, train_y
 
 train_x, train_y = load_data()
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
-N, D_in, H, D_out = len(train_x), 94, 47, 10 
+D = train_x.shape(1)
+N, D_in, H, D_out = len(train_x), D, int(D/2), 10 
 model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out))
 # model = torch.load('firsttry.pt')
 loss = torch.nn.CrossEntropyLoss()
