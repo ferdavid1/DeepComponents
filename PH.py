@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from betti import SimplicialComplex
 from PIL import Image
 from torchvision.datasets import MNIST
 
@@ -13,7 +12,6 @@ def process_images():
 
 def morse(image_array): # plot image values as a signal, turned into a morse function 
 	connected_components = []
-	across_column_connectedness = []
 	for x in image_array:
 		cc = 0
 		ccs = []
@@ -23,6 +21,8 @@ def morse(image_array): # plot image values as a signal, turned into a morse fun
 			elif value == 0 and cc > 0:
 				ccs.append(cc)
 				cc = 0
+			else:
+				ccs.append(0)
 		connected_components.append(ccs)
 	new_connected = []
 	for c in connected_components:
@@ -38,8 +38,9 @@ def PersistentHomology():
 	images, labels = data[0], data[1]
 	df = pd.DataFrame()
 	structures = []
-	df['ImageStructure'] = [morse(image) for image in images]
+	df['ImageStructure'] = np.array([morse(image) for image in images])
 	df['ImageLabels'] = labels 
+	
 	df.to_csv('ImageTopologyDataset.csv', index=False)
 
 PersistentHomology()
