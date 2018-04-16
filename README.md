@@ -12,4 +12,5 @@ Image Recognition by Persistent Homology
 - This process reduces dimensionality of MNIST to 28-D
 
 ## Neural Network
-- Very simple, 1-hidden-layer model with ADAM optimization
+- PyTorch
+- Very simple, 1-hidden-layer model with ADAM optimization, Cross-Entropy Loss. 
