@@ -8,9 +8,7 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 
-upper_lim = 750
 def pad_component_arrays(x):
-    # upper_lim = max([len(x) for x in train_x]) this is 750
     output_x = np.array([np.pad(array, upper_lim-len(array), mode='constant', constant_values=0) for array in x])
     return output_x
 
@@ -23,6 +21,7 @@ def load_data():
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y
 
+upper_lim = max([len(x) for x in train_x])
 train_x, train_y = load_data()
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
@@ -34,7 +33,7 @@ learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
 for i in range(2000):
     for ind, image in enumerate(train_x):
-        image = image.view(image.shape(0), 750)
+        image = image.view(1, 750)
         y_pred = model(image)
         lossed = loss(y_pred, train_y[ind])
         print(i, lossed.data[0])
