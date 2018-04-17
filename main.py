@@ -52,7 +52,7 @@ for i in range(2000):
             print("Error:" + str(lossed))
 torch.save(model, 'firsttry.pt')
 
-# model = torch.load('firsttry.pt')
+model = torch.load('firsttry.pt')
 test_x, test_y, _ = load_data(train=False)
 test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
 for index, img in enumerate(test_x):
