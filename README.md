@@ -14,5 +14,5 @@ Image Recognition by Persistent Homology
 
 ## Neural Network
 - PyTorch
-- Very simple, 1-hidden-layer model with ADAM optimization, Cross-Entropy Loss. 
+- Very simple, 1-hidden-layer model with ADAM optimization, Cross-Entropy Loss, ReLU activations. 
 
