@@ -33,7 +33,6 @@ train_x, train_y, upper_lim = load_data(train=True)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
 N, D_in, H, D_out = len(train_x), upper_lim, int(upper_lim/2), 10 
 model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out))
-# model = torch.load('firsttry.pt')
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
@@ -48,11 +47,12 @@ for i in range(2000):
         optim.step()
         for param in model.parameters():
             param.data -= learning_rate * param.grad.data
-    	        
+                
         if i%200 == 0:
             print("Error:" + str(lossed))
 torch.save(model, 'firsttry.pt')
 
+# model = torch.load('firsttry.pt')
 test_x, test_y, _ = load_data(train=False)
 test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
 for index, img in enumerate(test_x):
