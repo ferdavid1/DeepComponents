@@ -14,8 +14,11 @@ def pad_component_arrays(x, upper_lim):
         output_x.append(array)
     return np.array(output_x)
 
-def load_data():
-    data = pd.read_csv('ImageTopologyDataset.csv')
+def load_data(train=True):
+    if train:
+        data = pd.read_csv('ImageTopologyDataset.csv')
+    else:
+        data = pd.read_csv('ImageTopologyTesting.csv')
     train_x = data['ImageStructure'].values
     train_y = Variable(torch.from_numpy(data['ImageLabels'].values), requires_grad=False)
     train_x = list(map(literal_eval, train_x))
@@ -25,7 +28,7 @@ def load_data():
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
-train_x, train_y, upper_lim = load_data()
+train_x, train_y, upper_lim = load_data(train=True)
 # test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
 # load_test = DataLoader(test_data, batch_size=100, shuffle=True)
 N, D_in, H, D_out = len(train_x), upper_lim, int(upper_lim/2), 10 
@@ -49,3 +52,10 @@ for i in range(2000):
         if i%200 == 0:
             print("Error:" + str(lossed))
 torch.save(model, 'firsttry.pt')
+
+test_x, test_y, _ = load_data(train=False)
+test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
+for index, img in enumerate(test_x):
+    y_pred = model(img)
+    y_true = test_y[ind]
+    print(y_pred, y_true)
