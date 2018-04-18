@@ -29,14 +29,13 @@ def load_data(train=True):
     return train_x, train_y, upper_lim
 
 train_x, train_y, upper_lim = load_data(train=True)
-# test_data = MNIST(root='.', train=False, transform=ToTensor(), download=False)
-# load_test = DataLoader(test_data, batch_size=100, shuffle=True)
 N, D_in, H, D_out = len(train_x), upper_lim, int(upper_lim/2), 10 
-model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out))
+model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out), torch.nn.Softmax())
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
-for i in range(2000):
+# for i in range(2000):
+for i in range(10):
     for ind, image in enumerate(train_x):
         image = image.view(1, upper_lim)
         y_pred = model(image)
@@ -52,10 +51,10 @@ for i in range(2000):
             print("Error:" + str(lossed))
 torch.save(model, 'firsttry.pt')
 
-model = torch.load('firsttry.pt')
-test_x, test_y, _ = load_data(train=False)
-test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
-for index, img in enumerate(test_x):
-    y_pred = model(img)
-    y_true = test_y[ind]
-    print(y_pred, y_true)
+# model = torch.load('firsttry.pt')
+# test_x, test_y, _ = load_data(train=False)
+# test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
+# for index, img in enumerate(test_x):
+#     y_pred = model(img)
+#     y_true = test_y[index]
+#     print(y_pred, y_true)
