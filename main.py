@@ -57,5 +57,6 @@ for index, img in enumerate(test_x):
     y_true = test_y[index]
     accuracy.append(np.argmax(y_pred.data.numpy())==int(y_true))
 
-print('Accuracy: ', str((len(accuracy[accuracy==True])/ len(accuracy[accuracy==False]))*100 + '%'))
+ratio = str((accuracy.count(True)/ accuracy.count(False))*100)
+print('Accuracy: ', str(ratio+'%'))
 
