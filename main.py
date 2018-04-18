@@ -50,8 +50,12 @@ def load_data(train=True):
 
 model = torch.load('firsttry.pt')
 test_x, test_y, _ = load_data(train=False)
-test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
+test_x, test_y = test_x[:30], test_y[:30] # test only the first ten images
+accuracy = []
 for index, img in enumerate(test_x):
     y_pred = model(img)
     y_true = test_y[index]
-    print(np.argmax(y_pred.data.numpy())==int(y_true))
+    accuracy.append(np.argmax(y_pred.data.numpy())==int(y_true))
+
+print('Accuracy: ', str((len(accuracy[accuracy==True])/ len(accuracy[accuracy==False]))*100 + '%'))
+
