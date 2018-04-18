@@ -54,4 +54,4 @@ test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
 for index, img in enumerate(test_x):
     y_pred = model(img)
     y_true = test_y[index]
-    print(np.argmax(y_pred)==y_true)
+    print(np.argmax(np.array(y_pred))==y_true)
