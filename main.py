@@ -35,7 +35,7 @@ loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e3
 optim = optim.Adam(model.parameters(), lr=learning_rate)
 # for i in range(2000):
-for i in range(10):
+for i in range(100):
     for ind, image in enumerate(train_x):
         image = image.view(1, upper_lim)
         y_pred = model(image)
