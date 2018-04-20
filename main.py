@@ -5,6 +5,7 @@ import torch.optim as optim
 import pandas as pd 
 import numpy as np
 from ast import literal_eval
+from PH import PersistentHomology
 
 def pad_component_arrays(x, upper_lim):
     input_x = np.array(x)
@@ -15,6 +16,7 @@ def pad_component_arrays(x, upper_lim):
     return np.array(output_x)
 
 def load_data(train=True):
+    # loading the dataset of morse functions of each number representation
     if train:
         data = pd.read_csv('ImageTopologyDataset.csv')
     else:
@@ -22,9 +24,12 @@ def load_data(train=True):
     train_x = data['ImageStructure'].values
     train_y = Variable(torch.from_numpy(data['ImageLabels'].values), requires_grad=False)
     train_x = list(map(literal_eval, train_x))
+
+    train_x = PersistentHomology(train_x)
     # upper_lim = max([len(x) for x in train_x])
     upper_lim = 750
-    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
+    # train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
+    train_x = list(map(torch.from_numpy, train_x))
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 

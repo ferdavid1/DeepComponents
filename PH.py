@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 from torchvision.datasets import MNIST
+import networkx as nx 
+from scipy.spatial import distance
+from itertools import product
 
 def process_images():
 	train_data = MNIST(root = '.', train=True, download=False)	
@@ -36,7 +39,7 @@ def morse(image_array): # plot image values as a signal, turned into a morse fun
 				new_connected.append(x)
 	return new_connected
 
-def PersistentHomology():
+def make_dataset():
 	data = process_images()
 	images, labels = data[0], data[1]
 	df = pd.DataFrame()
@@ -45,7 +48,35 @@ def PersistentHomology():
 	
 	df['ImageLabels'] = labels 
 	
-	df.to_csv('ImageTopologyDataset.csv', index=False)
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
+	df.to_csv('ImageTopologyDataset.csv', index=False)
 
-PersistentHomology()
+
+class VietorisRipsComplex(SimplicialComplex):
+	def __init__(self, points, epsilon, labels=None, distfnc=distance.euclidean):
+		self.pts = points
+		self.epsilon = epsilon
+		self.labels = range(len(self.pts))
+		self.distfnc = distfnc
+		self.network = self.construct_network(self.pts, self.labels, self.epsilon, self.distfnc)
+
+	def construct_network(self, points, labels, epsilon, distfnc):
+		g = nx.Graph()
+		g.add_nodes_from(labels)
+		zips = list(zip(points, labels))
+		for pair in product(zips, zips):
+			if pair[0][1] != pair[1][1]: # if not the same point
+				dist = distfnc(pair[0][0], pair[1][0])
+				if dist < epsilon:
+					g.add_edge(pair[0][1], pair[1][1])
+		return g
+
+def PersistentHomology(morse_function_values):
+	vr = VietorisRipsComplex((1,2,3,4,1,2), 0.1)
+	G = vr.network
+	nx.draw(G, with_labels=True)
+	plt.show()
+	
+
+
+# make_dataset()
