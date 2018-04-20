@@ -46,9 +46,13 @@ def make_dataset():
 	df = pd.DataFrame()
 	structures = []
 	df['ImageStructure'] = [morse(image) for image in images]
-	df['ImageStructure'] = np.array(list(map(literal_eval, df['ImageStructure'].values)))
 	IS = df['ImageStructure']
 	df['ImageStructure'] = IS[IS!=0]
+	final_structures = np.array([])
+	for struct in df['ImageStructure'].values:
+		print(struct)
+		final_structures += literal_eval(struct)
+	df['ImageStructure'] = final_structures
 	df['ImageLabels'] = labels 
 	
 	# df.to_csv('ImageTopologyTesting.csv', index=False)

@@ -24,9 +24,9 @@ def load_data(train=True):
     train_y = Variable(torch.from_numpy(data['ImageLabels'].values), requires_grad=False)
 
     upper_lim = max([len(x) for x in train_x])
-    upper_lim = 750
-    # train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
-    train_x = list(map(torch.from_numpy, train_x))
+    # upper_lim = 750
+    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
+    # train_x = list(map(torch.from_numpy, train_x))
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
