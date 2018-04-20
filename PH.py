@@ -48,8 +48,7 @@ def make_dataset():
 	final_structures = []
 	for struct in morsed:
 		struct = np.array(struct)
-		final_structures.append(struct[struct!=0]) # remove zeros so that we have the final connected component morse function
-	print(final_structures[:20])
+		final_structures.append(list(struct[struct!=0])) # remove zeros so that we have the final connected component morse function
 	df['ImageStructure'] = final_structures
 	df['ImageLabels'] = labels 
 	
