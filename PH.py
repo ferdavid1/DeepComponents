@@ -87,21 +87,24 @@ class VietorisRipsComplex(SimplicialComplex):
 					g.add_edge(pair[0][1], pair[1][1])
 		return g
 
-def PersistentHomology(morse_function_values, epsilon): # epsilon is the neighborhood radius value for the Vietoris-Rips Complex
+def PersistentHomology(list_of_morse_functions, epsilon, labels): # epsilon is the neighborhood radius value for the Vietoris-Rips Complex
 	import matplotlib.pyplot as plt 
-	vr = VietorisRipsComplex(morse_function_values, epsilon)
-	G = vr.network
-	nx.draw(G, with_labels=True)
-	plt.show()
+	vt_rps = []
+	for ind, i in enumerate(list_of_morse_functions):
+		vr = VietorisRipsComplex(i, epsilon)
+		G = vr.network
+		nx.draw(G, with_labels=True)
+		plt.savefig('vietoris_rips_complexes/Digit' + str(labels[ind]) + '.png')
+		vt_rps.append(G)
+		print(vt_rps)
 
 def test_PH():	
 	from ast import literal_eval
 	data = pd.read_csv('ImageTopologyDataset.csv')
 	data = data['ImageStructure'].values[:10]
-	data = list(map(literal_eval, data))
-
-	for x in range(len(data)):
-		PersistentHomology(data[x])
+	labels = data['ImageLabels'].values[:10]
+	data = list(map(literal_eval, data, values))
+	PersistentHomology(data, 0.1, labels)
 
 # make_dataset()
 test_PH()
