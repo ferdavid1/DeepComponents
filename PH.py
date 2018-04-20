@@ -44,12 +44,7 @@ def make_dataset():
 	data = process_images()
 	images, labels = data[0], data[1]
 	df = pd.DataFrame()
-	morsed = [morse(list(image)) for image in images]
-	final_structures = []
-	for struct in morsed:
-		struct = np.array(struct)
-		final_structures.append(list(struct[struct!=0])) # remove zeros so that we have the final connected component morse function
-	df['ImageStructure'] = final_structures
+	df['ImageStructure'] = [morse(list(image)) for image in images] 
 	df['ImageLabels'] = labels 
 	
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
