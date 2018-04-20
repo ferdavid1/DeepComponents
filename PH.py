@@ -44,10 +44,10 @@ def make_dataset():
 	data = process_images()
 	images, labels = data[0], data[1]
 	df = pd.DataFrame()
-	morsed = [morse(image) for image in images]
+	morsed = [morse(list(image)) for image in images]
 	final_structures = []
 	for struct in morsed:
-		struct = np.array(struct, dtype=int)
+		struct = np.array(struct)
 		final_structures.append(struct[struct!=0]) # remove zeros so that we have the final connected component morse function
 	print(final_structures[:20])
 	df['ImageStructure'] = final_structures
