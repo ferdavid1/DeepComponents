@@ -48,10 +48,10 @@ def load_data(train=True):
 #         optim.step()
 #         for param in model.parameters():
 #             param.data -= learning_rate * param.grad.data
-# torch.save(model, 'firsttry.pt')
+# torch.save(model, 'model.pt')
 # print('Done Training')
 
-model = torch.load('firsttry.pt')
+model = torch.load('model.pt')
 test_x, test_y, _ = load_data(train=False)
 # test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
 accuracy = []
