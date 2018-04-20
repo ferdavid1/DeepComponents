@@ -42,6 +42,7 @@ def PersistentHomology():
 	df = pd.DataFrame()
 	structures = []
 	df['ImageStructure'] = np.array([morse(image) for image in images])
+	
 	df['ImageLabels'] = labels 
 	
 	df.to_csv('ImageTopologyDataset.csv', index=False)

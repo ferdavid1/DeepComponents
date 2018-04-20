@@ -47,7 +47,6 @@ def load_data(train=True):
 #         for param in model.parameters():
 #             param.data -= learning_rate * param.grad.data
 # torch.save(model, 'firsttry.pt')
-# print('Done Training')
 
 model = torch.load('firsttry.pt')
 test_x, test_y, _ = load_data(train=False)
