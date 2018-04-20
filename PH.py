@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
 from PIL import Image
-from torchvision.datasets import MNIST
 import networkx as nx 
 from scipy.spatial import distance
 from itertools import product
 
 def process_images():
+	from torchvision.datasets import MNIST
 	train_data = MNIST(root = '.', train=True, download=False)	
 	test_data = MNIST(root='.', train=False, download=False)
 	data = train_data
@@ -51,6 +51,22 @@ def make_dataset():
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
 	df.to_csv('ImageTopologyDataset.csv', index=False)
 
+class SimplicialComplex:
+	def __init__(self, simplices=[]):
+		self.simplices = simplices
+		self.face_set = self.faces()
+
+	def faces(self):
+		faceset = set()
+		for simplex in self.simplices:
+			numnodes = len(simplex)
+			for r in range(numnodes, 0, -1):
+				for face in combinations(simplex,r):
+					faceset.add(face)
+		return faceset
+
+	def n_faces(self, n):
+ 		return filter(lambda face: len(face)==n+1, self.face_set)
 
 class VietorisRipsComplex(SimplicialComplex):
 	def __init__(self, points, epsilon, labels=None, distfnc=distance.euclidean):
@@ -71,12 +87,21 @@ class VietorisRipsComplex(SimplicialComplex):
 					g.add_edge(pair[0][1], pair[1][1])
 		return g
 
-def PersistentHomology(morse_function_values):
-	vr = VietorisRipsComplex((1,2,3,4,1,2), 0.1)
+def PersistentHomology(morse_function_values, epsilon): # epsilon is the neighborhood radius value for the Vietoris-Rips Complex
+	import matplotlib.pyplot as plt 
+	vr = VietorisRipsComplex(morse_function_values, epsilon)
 	G = vr.network
 	nx.draw(G, with_labels=True)
 	plt.show()
-	
 
+def test_PH():	
+	from ast import literal_eval
+	data = pd.read_csv('ImageTopologyDataset.csv')
+	data = data['ImageStructure'].values[:10]
+	data = list(map(literal_eval, data))
+
+	for x in range(len(data)):
+		PersistentHomology(data[x])
 
 # make_dataset()
+test_PH()
