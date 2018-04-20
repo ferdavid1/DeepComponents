@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 from ast import literal_eval
 
 data = pd.read_csv('ImageTopologyDataset.csv')
-data = data['ImageStructure'].values[:100]
+labels = data['ImageLabels'].values
+data = data['ImageStructure'].values[:20]
 data = list(map(literal_eval, data))
 for x in range(len(data)):
 	plt.figure()
 	plt.plot(data[x])
-	plt.show()
-	plt.savefig('number_representation_viz/' + 'viz' + str(x) + '.png')
+	# plt.show()
+	plt.savefig('Visualizations/morse_funcs/' + 'viz_' + 'picture' + str(x) + 'digit' + str(labels[x]) + '.png')

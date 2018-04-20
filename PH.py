@@ -44,67 +44,13 @@ def make_dataset():
 	images, labels = data[0], data[1]
 	df = pd.DataFrame()
 	structures = []
-	df['ImageStructure'] = np.array([morse(image) for image in images])
-	
+	df['ImageStructure'] = [morse(image) for image in images]
+	df['ImageStructure'] = np.array(list(map(literal_eval, train_x)))
+	IS = df['ImageStructure']
+	df['ImageStructure'] = IS[IS!=0]
 	df['ImageLabels'] = labels 
 	
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
 	df.to_csv('ImageTopologyDataset.csv', index=False)
 
-class SimplicialComplex:
-	def __init__(self, simplices=[]):
-		self.simplices = simplices
-		self.face_set = self.faces()
-
-	def faces(self):
-		faceset = set()
-		for simplex in self.simplices:
-			numnodes = len(simplex)
-			for r in range(numnodes, 0, -1):
-				for face in combinations(simplex,r):
-					faceset.add(face)
-		return faceset
-
-	def n_faces(self, n):
- 		return filter(lambda face: len(face)==n+1, self.face_set)
-
-class VietorisRipsComplex(SimplicialComplex):
-	def __init__(self, points, epsilon, labels=None, distfnc=distance.euclidean):
-		self.pts = points
-		self.epsilon = epsilon
-		self.labels = range(len(self.pts))
-		self.distfnc = distfnc
-		self.network = self.construct_network(self.pts, self.labels, self.epsilon, self.distfnc)
-
-	def construct_network(self, points, labels, epsilon, distfnc):
-		g = nx.Graph()
-		g.add_nodes_from(labels)
-		zips = list(zip(points, labels))
-		for pair in product(zips, zips):
-			if pair[0][1] != pair[1][1]: # if not the same point
-				dist = distfnc(pair[0][0], pair[1][0])
-				if dist < epsilon:
-					g.add_edge(pair[0][1], pair[1][1])
-		return g
-
-def PersistentHomology(list_of_morse_functions, epsilon, labels): # epsilon is the neighborhood radius value for the Vietoris-Rips Complex
-	import matplotlib.pyplot as plt 
-	vt_rps = []
-	for ind, i in enumerate(list_of_morse_functions):
-		vr = VietorisRipsComplex(i, epsilon)
-		G = vr.network
-		nx.draw(G, with_labels=True)
-		plt.savefig('vietoris_rips_complexes/Digit' + str(labels[ind]) + '.png')
-		vt_rps.append(G)
-		print(vt_rps)
-
-def test_PH():	
-	from ast import literal_eval
-	data = pd.read_csv('ImageTopologyDataset.csv')
-	data = data['ImageStructure'].values[:10]
-	labels = data['ImageLabels'].values
-	data = list(map(literal_eval, data, values))
-	PersistentHomology(data, 0.1, labels)
-
-# make_dataset()
-test_PH()
+make_dataset()
