@@ -1,5 +1,5 @@
-# PersistenceRecognition
-Image Recognition by Persistent Homology
+# DeepComponents
+Image Recognition by Connected Component-based Deep Neural Networks
 
 ## Data
 - MNIST

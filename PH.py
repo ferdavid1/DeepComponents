@@ -4,6 +4,7 @@ from PIL import Image
 import networkx as nx 
 from scipy.spatial import distance
 from itertools import product
+from ast import literal_eval
 
 def process_images():
 	from torchvision.datasets import MNIST
@@ -45,7 +46,7 @@ def make_dataset():
 	df = pd.DataFrame()
 	structures = []
 	df['ImageStructure'] = [morse(image) for image in images]
-	df['ImageStructure'] = np.array(list(map(literal_eval, train_x)))
+	df['ImageStructure'] = np.array(list(map(literal_eval, df['ImageStructure'].values)))
 	IS = df['ImageStructure']
 	df['ImageStructure'] = IS[IS!=0]
 	df['ImageLabels'] = labels 
