@@ -102,7 +102,7 @@ def test_PH():
 	from ast import literal_eval
 	data = pd.read_csv('ImageTopologyDataset.csv')
 	data = data['ImageStructure'].values[:10]
-	labels = data['ImageLabels'].values[:10]
+	labels = data['ImageLabels'].values
 	data = list(map(literal_eval, data, values))
 	PersistentHomology(data, 0.1, labels)
 
