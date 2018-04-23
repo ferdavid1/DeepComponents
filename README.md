@@ -20,6 +20,14 @@ Image Recognition by Connected Component-based Deep Neural Networks
 - Digits: 1 (Original Pictures)
 <img src="Visualizations/number_pictures/picture7digit1.png" width="100" height="100" />
 <img src="Visualizations/number_pictures/picture9digit1.png" width="100" height="100" />
+
+- Digits: 1 (Morse Functions)
+![Model1](Visualizations/morse_funcs/viz_picture50digit3.png)
+![Model2](Visualizations/morse_funcs/viz_picture51digit3.png)
+
+- Digits: 1 (Original Pictures)
+<img src="Visualizations/number_pictures/picture50digit3.png" width="100" height="100" />
+<img src="Visualizations/number_pictures/picture51digit3.png" width="100" height="100" />
 ## Neural Network
 - PyTorch
 - Very simple, 1-hidden-layer model with ADAM optimization, Cross-Entropy Loss, ReLU activations. 
