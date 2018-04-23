@@ -19,10 +19,11 @@ def image_draw():
 		i = np.array(data[c])
 		im = Image.fromarray(i)
 		im.save('Visualizations/number_pictures/' +	'picture' + str(c+1) + "digit" + str(labels[c]) + ".png")
+		
 if __name__ == '__main__':
 	data = pd.read_csv('ImageTopologyDataset.csv')
 	labels = data['ImageLabels'].values
 	data = data['ImageStructure'].values[:51]
 	data = list(map(literal_eval, data))
 	# plot_morse(data, labels)
-	image_draw()
+	# image_draw()
