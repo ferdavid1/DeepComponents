@@ -14,8 +14,8 @@ Image Recognition by Connected Component-based Deep Neural Networks
 ## Morse Function Representation
 
 - Digits: 1 (Morse Functions)
-![Model1](Visualizations/morse_functions/viz_picture9digit1.png)
-![Model2](Visualizations/morse_functions/viz_picture9digit1.png)
+![Model1](Visualizations/morse_funcs/viz_picture9digit1.png)
+![Model2](Visualizations/morse_funcs/viz_picture9digit1.png)
 
 - Digits: 1 (Original Pictures)
 ![Model3](Visualizations/number_pictures/picture7digit1.png)
