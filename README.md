@@ -14,12 +14,12 @@ Image Recognition by Connected Component-based Deep Neural Networks
 ## Morse Function Representation
 
 - Digits: 1 (Morse Functions)
-![Model](Visualization/morse_functions/viz_picture9digit1.png)
-![Model](Visualization/morse_functions/viz_picture9digit1.png)
+![Model1](Visualization/morse_functions/viz_picture9digit1.png)
+![Model2](Visualization/morse_functions/viz_picture9digit1.png)
 
 - Digits: 1 (Original Pictures)
-![Model](Visualization/number_pictures/picture7digit1.png)
-![Model](Visualization/number_pictures/picture9digit1.png)
+![Model3](Visualization/number_pictures/picture7digit1.png)
+![Model4](Visualization/number_pictures/picture9digit1.png)
 
 ## Neural Network
 - PyTorch
