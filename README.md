@@ -11,6 +11,16 @@ Image Recognition by Connected Component-based Deep Neural Networks
 - This process reduces dimensionality of MNIST to 28-dimensional at first, and then 28-x dimensional, where x is the number of zeros in the N-vector.
 - In the future, I will train the algorithm on the noisier augmented-MNIST dataset. 
 
+## Morse Function Representation
+
+- Digits: 1 (Morse Functions)
+![Model](Visualization/morse_functions/viz_picture9digit1.png)
+![Model](Visualization/morse_functions/viz_picture9digit1.png)
+
+- Digits: 1 (Original Pictures)
+![Model](Visualization/number_pictures/picture7digit1.png)
+![Model](Visualization/number_pictures/picture9digit1.png)
+
 ## Neural Network
 - PyTorch
 - Very simple, 1-hidden-layer model with ADAM optimization, Cross-Entropy Loss, ReLU activations. 
