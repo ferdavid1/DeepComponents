@@ -26,34 +26,29 @@ def load_data(train=True):
     # upper_lim = max([len(x) for x in train_x])
     upper_lim = 750
     train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
-    # train_x = list(map(torch.from_numpy, train_x))
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
 train_x, train_y, upper_lim = load_data(train=True)
-for x in range(20):
-    plt.figure()
-    plt.plot(train_x[x])
-    # plt.show()
-# N, D_in, H, D_out = len(train_x), upper_lim, int(upper_lim/2), 10 
-# model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out), torch.nn.LogSoftmax())
-# loss = torch.nn.CrossEntropyLoss()
-# learning_rate = 1e3
-# optim = optim.Adam(model.parameters(), lr=learning_rate)
-# # for i in range(2000):
-# for i in range(100):
-#     for ind, image in enumerate(train_x):
-#         image = image.view(1, upper_lim)
-#         y_pred = model(image)
-#         lossed = loss(y_pred, train_y[ind])
-#         print(i, lossed.data[0])
-#         optim.zero_grad()
-#         lossed.backward()
-#         optim.step()
-#         for param in model.parameters():
-#             param.data -= learning_rate * param.grad.data
-# torch.save(model, 'model.pt')
-# print('Done Training')
+N, D_in, H, D_out = len(train_x), upper_lim, 200, 10 
+model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out), torch.nn.LogSoftmax())
+loss = torch.nn.CrossEntropyLoss()
+learning_rate = 1e3
+optim = optim.Adam(model.parameters(), lr=learning_rate)
+
+for i in range(2000):
+    for ind, image in enumerate(train_x):
+        image = image.view(1, upper_lim)
+        y_pred = model(image)
+        lossed = loss(y_pred, train_y[ind])
+        print(i, lossed.data[0])
+        optim.zero_grad()
+        lossed.backward()
+        optim.step()
+        for param in model.parameters():
+            param.data -= learning_rate * param.grad.data
+torch.save(model, 'model.pt')
+print('Done Training')
 
 # model = torch.load('model.pt')
 # test_x, test_y, _ = load_data(train=False)
