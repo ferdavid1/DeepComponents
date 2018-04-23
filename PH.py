@@ -50,4 +50,4 @@ def make_dataset():
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
 	df.to_csv('ImageTopologyDataset.csv', index=False)
 
-make_dataset()
+# make_dataset()
