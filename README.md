@@ -18,8 +18,8 @@ Image Recognition by Connected Component-based Deep Neural Networks
 ![Model2](Visualizations/morse_funcs/viz_picture9digit1.png)
 
 - Digits: 1 (Original Pictures)
-![Model3](Visualizations/number_pictures/picture7digit1.png)
-![Model4](Visualizations/number_pictures/picture9digit1.png)
+![Model3](Visualizations/number_pictures/picture7digit1.png =100x20)
+![Model4](Visualizations/number_pictures/picture9digit1.png =100x20)
 
 ## Neural Network
 - PyTorch
