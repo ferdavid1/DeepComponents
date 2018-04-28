@@ -29,36 +29,38 @@ def load_data(train=True):
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
-train_x, train_y, upper_lim = load_data(train=True)
-N, D_in, H, D_out = len(train_x), upper_lim, 200, 10 
-model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, D_out), torch.nn.LogSoftmax())
-loss = torch.nn.CrossEntropyLoss()
-learning_rate = 1e3
-optim = optim.Adam(model.parameters(), lr=learning_rate)
+# train_x, train_y, upper_lim = load_data(train=True)
+# N, D_in, H, D_out = len(train_x), upper_lim, 200, 10 
+# model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out), torch.nn.LogSoftmax())
+# loss = torch.nn.CrossEntropyLoss()
+# learning_rate = 1e-1
+# optim = optim.Adam(model.parameters(), lr=learning_rate)
 
-for i in range(2000):
-    for ind, image in enumerate(train_x):
-        image = image.view(1, upper_lim)
-        y_pred = model(image)
-        lossed = loss(y_pred, train_y[ind])
-        print(i, lossed.data[0])
-        optim.zero_grad()
-        lossed.backward()
-        optim.step()
-        for param in model.parameters():
-            param.data -= learning_rate * param.grad.data
-torch.save(model, 'model.pt')
-print('Done Training')
+# # for i in range(2000):
+# for i in range(10):
+#     for ind, image in enumerate(train_x):
+#         image = image.view(1, upper_lim)
+#         y_pred = model(image)
+#         lossed = loss(y_pred, train_y[ind])
+#         print(i, lossed.data[0])
+#         optim.zero_grad()
+#         lossed.backward()
+#         optim.step()
+#         for param in model.parameters():
+#             param.data -= learning_rate * param.grad.data
+# torch.save(model, 'model.pt')
+# print('Done Training')
 
-# model = torch.load('model.pt')
-# test_x, test_y, _ = load_data(train=False)
-# # test_x, test_y = test_x[:10], test_y[:10] # test only the first ten images
-# accuracy = []
-# for index, img in enumerate(test_x):
-#     y_pred = model(img)
-#     y_true = test_y[index]
-#     accuracy.append(np.argmax(y_pred.data.numpy())==int(y_true))
+model = torch.load('model.pt')
+test_x, test_y, _ = load_data(train=False)
+# test_x, test_y = test_x[:100], test_y[:100] # test only the first ten images
+accuracy = []
+for index, img in enumerate(test_x):
+    y_pred = model(img)
+    y_true = test_y[index]
+    accuracy.append(np.argmax(y_pred.data.numpy())==int(y_true))
+    # print(y_pred, y_true)
 
-# ratio = str((accuracy.count(True)/ accuracy.count(False))*100)
-# print('Accuracy: ', str(ratio+'%'))
+ratio = str((accuracy.count(True)/ accuracy.count(False))*100)
+print('Accuracy: ', str(ratio+'%'))
 
