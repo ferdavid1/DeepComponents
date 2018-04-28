@@ -44,10 +44,15 @@ def make_dataset():
 	data = process_images()
 	images, labels = data[0], data[1]
 	df = pd.DataFrame()
-	df['ImageStructure'] = [morse(list(image)) for image in images] 
+	tmp = [morse(list(image)) for image in images]
+	for ind, t in enumerate(tmp):
+		v = np.array(t)
+		v = list(v[v!=0])
+		tmp[ind] = v
+	df['ImageStructure'] = tmp  
 	df['ImageLabels'] = labels 
 	
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
 	df.to_csv('ImageTopologyDataset.csv', index=False)
 
-# make_dataset()
+make_dataset()
