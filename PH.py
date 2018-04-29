@@ -10,8 +10,8 @@ def process_images():
 	from torchvision.datasets import MNIST
 	train_data = MNIST(root = '.', train=True, download=False)	
 	test_data = MNIST(root='.', train=False, download=False)
-	# data = train_data
-	data = test_data
+	data = train_data
+	# data = test_data
 	df = pd.DataFrame()	
 	df['images'] = [np.array(x)*255 for x,y in data]
 	df['labels'] = [y for x,y in data]
@@ -41,8 +41,7 @@ def morse(image_array): # plot image values as a signal, turned into a morse fun
 	return new_connected
 
 def make_dataset():
-	data = process_images()
-	images, labels = data[0], data[1]
+	images, labels = process_images()
 	df = pd.DataFrame()
 	tmp = [morse(list(image)) for image in images]
 	for ind, t in enumerate(tmp):
@@ -55,4 +54,4 @@ def make_dataset():
 	df.to_csv('ImageTopologyTesting.csv', index=False)
 	# df.to_csv('ImageTopologyDataset.csv', index=False)
 
-make_dataset()
+# make_dataset()
