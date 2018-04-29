@@ -29,8 +29,8 @@ def load_data(train=True):
     return train_x, train_y, upper_lim
 
 train_x, train_y, upper_lim = load_data(train=True)
-N, D_in, H, D_out = len(train_x), upper_lim, 500, 10 
-model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 256), torch.nn.ReLU(), torch.nn.Linear(256, D_out))
+N, D_in, H, D_out = len(train_x), upper_lim, 200, 10 
+model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e-2
 optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
