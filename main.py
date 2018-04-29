@@ -45,21 +45,24 @@ for i in range(10):
         print(i, lossed.data[0])
         lossed.backward()
         optim.step()
-        # for param in model.parameters():
-        #     param.data -= learning_rate * param.grad.data
-torch.save(model.state_dict(), 'model.pt')
+
+torch.save(model, 'model.pt')
 print('Done Training')
 
 model = torch.load('model.pt')
 test_x, test_y, _ = load_data(train=False)
 test_x, test_y = test_x[:100], test_y[:100] # test only the first ten images
-accuracy = []
-for index, img in enumerate(test_x):
-    y_pred = model(img)
-    y_true = test_y[index]
-    accuracy.append(np.argmax(y_pred.data.numpy())==int(y_true))
-    print(y_pred, y_true)
 
-ratio = str((accuracy.count(True)/ accuracy.count(False))*100)
-print('Accuracy: ', str(ratio+'%'))
+# correct = 0
+# total = 0
+with torch.no_grad():
+    for index, img in enumerate(test_x):
+        y_pred = model(img)
+        y_true = test_y[index]
+        _, predicted = torch.max(y_pred.data, 1)
+        print(predicted, y_true)
+        # total += test_y.size(0)
+        # correct += (predicted == y_true).sum().item()
 
+
+# print('Accuracy of the network on the 100 test images: %d %%' % (100 * correct / total))
