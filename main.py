@@ -28,41 +28,41 @@ def load_data(train=True):
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
-train_x, train_y, upper_lim = load_data(train=True)
-N, D_in, H, D_out = len(train_x), upper_lim, 200, 10 
-model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
-loss = torch.nn.CrossEntropyLoss()
-learning_rate = 1e-2
-optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
+# train_x, train_y, upper_lim = load_data(train=True)
+# N, D_in, H, D_out = len(train_x), upper_lim, 200, 10 
+# model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
+# loss = torch.nn.CrossEntropyLoss()
+# learning_rate = 1e-2
+# optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
-# for i in range(2000):
-for i in range(10):
-    for ind, rep in enumerate(train_x):
-        optim.zero_grad()
-        rep = rep.view(1, upper_lim)
-        y_pred = model(rep)
-        lossed = loss(y_pred, train_y[ind])
-        print(i, lossed.data[0])
-        lossed.backward()
-        optim.step()
+# # for i in range(2000):
+# for i in range(10):
+#     for ind, rep in enumerate(train_x):
+#         optim.zero_grad()
+#         rep = rep.view(1, upper_lim)
+#         y_pred = model(rep)
+#         lossed = loss(y_pred, train_y[ind])
+#         print(i, lossed.data[0])
+#         lossed.backward()
+#         optim.step()
 
-torch.save(model, 'model.pt')
-print('Done Training')
+# torch.save(model, 'model.pt')
+# print('Done Training')
 
 model = torch.load('model.pt')
-test_x, test_y, _ = load_data(train=False)
+test_x, test_y, ul = load_data(train=False)
 test_x, test_y = test_x[:100], test_y[:100] # test only the first ten images
 
 # correct = 0
 # total = 0
-with torch.no_grad():
-    for index, img in enumerate(test_x):
-        y_pred = model(img)
-        y_true = test_y[index]
-        _, predicted = torch.max(y_pred.data, 1)
-        print(predicted, y_true)
-        # total += test_y.size(0)
-        # correct += (predicted == y_true).sum().item()
+for index, rep in enumerate(test_x):
+    rep = rep.view(1, ul)
+    y_pred = model(rep)
+    y_true = test_y[index]
+    _, predicted = torch.max(y_pred.data, 1)
+    print(predicted, y_true)
+    # total += test_y.size(0)
+    # correct += (predicted == y_true).sum().item()
 
 
 # print('Accuracy of the network on the 100 test images: %d %%' % (100 * correct / total))
