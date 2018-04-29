@@ -12,7 +12,7 @@ def pad_component_arrays(x, upper_lim):
     for array in input_x:
         array += [0]*(upper_lim-len(array))
         output_x.append(array)
-    return output_x
+    return np.array(output_x)
 
 def load_data(train=True):
     # loading the dataset of morse functions of each number representation
@@ -25,7 +25,7 @@ def load_data(train=True):
     train_x = list(map(literal_eval, train_x))
     # upper_lim = max([len(x) for x in train_x])
     upper_lim = 51
-    train_x = list(map(torch.from_numpy, np.array(pad_component_arrays(train_x, upper_lim))))
+    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
@@ -37,7 +37,7 @@ learning_rate = 1e-2
 optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
 # for i in range(2000):
-for i in range(10):
+for i in range(600):
     for ind, rep in enumerate(train_x):
         optim.zero_grad()
         rep = rep.view(1, upper_lim)
@@ -62,6 +62,7 @@ print('Done Training')
 #     y_true = test_y[index]
 #     _, predicted = torch.max(y_pred.data, 1)
 #     print(predicted, y_true)
+#     print('!!!!!')
     # total += test_y.size(0)
     # correct += (predicted == y_true).sum().item()
 
