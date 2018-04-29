@@ -12,7 +12,7 @@ def pad_component_arrays(x, upper_lim):
     for array in input_x:
         array += [0]*(upper_lim-len(array))
         output_x.append(array)
-    return np.array(output_x)
+    return output_x
 
 def load_data(train=True):
     # loading the dataset of morse functions of each number representation
@@ -25,7 +25,7 @@ def load_data(train=True):
     train_x = list(map(literal_eval, train_x))
     # upper_lim = max([len(x) for x in train_x])
     upper_lim = 51
-    train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
+    train_x = list(map(torch.from_numpy, np.array(pad_component_arrays(train_x, upper_lim))))
     train_x = list(map(Variable, [x.float() for x in train_x]))
     return train_x, train_y, upper_lim
 
