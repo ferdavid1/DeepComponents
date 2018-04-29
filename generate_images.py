@@ -9,12 +9,16 @@ def generate():
 	imgs = imgs[:10]
 	imgs = [morse(list(image)) for image in imgs] # morsify, but dont remove 0-value structure
 	for ind,i in enumerate(imgs):
+		print('1')
 		for indx, j in enumerate(i):
 			if j != 0:
+				imgs[ind].pop(indx)
+				print(j)
 				for x in range(j):
 					imgs[ind].append(np.random.randint(1,255))
 			else:
-				imgs[ind].append(j)
+				pass
+	print(imgs)
 	for ind,i in enumerate(imgs):
 		im = Image.fromarray(i)
 		im.save('Visualizations/generated/Representation'+ str(ind) + 'Digit' + str(labels[ind]))

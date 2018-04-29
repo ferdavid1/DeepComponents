@@ -50,8 +50,7 @@ def make_dataset():
 		tmp[ind] = v
 	df['ImageStructure'] = tmp  
 	df['ImageLabels'] = labels 
-	
-	df.to_csv('ImageTopologyTesting.csv', index=False)
-	# df.to_csv('ImageTopologyDataset.csv', index=False)
+	# df.to_csv('ImageTopologyTesting.csv', index=False)
+	df.to_csv('ImageTopologyDataset.csv', index=False)
 
-# make_dataset()
+make_dataset()
