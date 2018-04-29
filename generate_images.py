@@ -6,10 +6,9 @@ from PIL import Image
 
 def generate():
 	imgs, labels = process_images()
-	imgs = imgs[:10]
 	imgs = [morse(list(image)) for image in imgs] # morsify, but dont remove 0-value structure
 	for ind,i in enumerate(imgs):
-		print('1')
+		print('!!!')
 		for indx, j in enumerate(i):
 			if j != 0:
 				imgs[ind].pop(indx)
