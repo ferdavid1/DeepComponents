@@ -2,23 +2,6 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
 from ast import literal_eval
-from scipy.stats import pearsonr
-
-def pad_component_arrays(x, upper_lim):
-    input_x = np.array(x)
-    output_x = []
-    for array in input_x:
-        array += [0]*(upper_lim-len(array))
-        output_x.append(array)
-    return np.array(output_x)
-
-def corr(data, labels):
-	indices = np.where(labels==5)
-	indices = indices[0]
-	data = pad_component_arrays(data, 750)
-	print(len(indices))
-	for i in indices[:-1]:	
-		print(pearsonr(data[i], data[i+1]))
 
 
 def plot_morse(data, labels):
@@ -33,7 +16,7 @@ def image_draw():
 	from PIL import Image 
 	from PH import process_images
 	data, labels = process_images()
-	data, labels = data[:5], labels[:5]
+	data, labels = data[:51], labels[:51]
 	for c in range(len(data)):
 		i = np.array(data[c])
 		im = Image.fromarray(i)
@@ -45,5 +28,4 @@ if __name__ == '__main__':
 	data = data['ImageStructure'].values[:51]
 	data = list(map(literal_eval, data))
 	# plot_morse(data, labels)
-	corr(data, labels)
 	# image_draw()
