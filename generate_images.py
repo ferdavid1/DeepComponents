@@ -41,16 +41,25 @@ def generate():
 	imgs, labels = process_images()
 	imgs = imgs[:100]
 	imgs = [morse(list(image)) for image in imgs] # morsify, but dont remove 0-value structure
+	new_imgs = []
 	for ind,i in enumerate(imgs):
+		subarray = []
 		for indx, j in enumerate(i):
 			if j != 0:
-				print(j)
 				for x in range(j):
-					imgs[ind].insert(indx+x, np.random.randint(1,255))
+					rand = np.random.randint(1,255)
+					subarray.append(rand)
 			else:
-				pass
-	print(imgs)
-	for ind,i in enumerate(imgs):
+				subarray.append(0)
+		new_imgs.append(subarray)
+		# print(ind)
+	for ind,i in enumerate(new_imgs):
+		i = np.asarray(i, np.uint8)
+		if len(i) != 784:
+			diff = 784 - len(i)
+			print(diff)
+			i += [0]*diff
+		i.reshape((28,28))
 		im = Image.fromarray(i)
 		im.save('Visualizations/generated/Representation'+ str(ind) + 'Digit' + str(labels[ind]))
 
