@@ -39,7 +39,7 @@ def morse(image_array): # plot image values as a signal, turned into a morse fun
 
 def generate():
 	imgs, labels = process_images()
-	imgs = imgs[:100]
+	imgs = imgs[:51]
 	imgs = [morse(list(image)) for image in imgs] # morsify, but dont remove 0-value structure
 	new_imgs = []
 	for ind,i in enumerate(imgs):
@@ -47,20 +47,19 @@ def generate():
 		for indx, j in enumerate(i):
 			if j != 0:
 				for x in range(j):
-					rand = np.random.randint(1,255)
+					rand = np.random.randint(1,256)
 					subarray.append(rand)
 			else:
 				subarray.append(0)
 		new_imgs.append(subarray)
-		# print(ind)
+
 	for ind,i in enumerate(new_imgs):
-		i = np.asarray(i, np.uint8)
 		if len(i) != 784:
 			diff = 784 - len(i)
-			print(diff)
-			i += [0]*diff
-		i.reshape((28,28))
+			for x in range(diff):
+				i.append(0)
+		i = np.asarray(i, np.uint8).reshape((28,28))
 		im = Image.fromarray(i)
-		im.save('Visualizations/generated/Representation'+ str(ind) + 'Digit' + str(labels[ind]))
+		im.save("Visualizations/generated/Representation"+ str(ind) + "Digit" + str(labels[ind]) + ".png")
 
 generate()
