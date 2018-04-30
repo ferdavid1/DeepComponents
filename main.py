@@ -27,8 +27,8 @@ def load_data(train=True):
     train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
     # upper_lim = max([len(x) for x in train_x])
-    # upper_lim = 51 # if the small representation
-    upper_lim = 750 # if the big representation
+    upper_lim = 51 # if the small representation
+    # upper_lim = 750 # if the big representation
     train_x = torch.from_numpy(pad_component_arrays(train_x, upper_lim))
     train = data_utils.TensorDataset(train_x, train_y)
     train_loader = data_utils.DataLoader(train, batch_size=100, num_workers=5, shuffle=shuff)
@@ -36,13 +36,13 @@ def load_data(train=True):
 
 train, upper_lim = load_data(train=True)
 D_in, H, D_out = upper_lim, 200, 10 
-model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.Dropout(0.4), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.Dropout(0.3), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
+model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e-2
 optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
 print("Started Training")
-for i in range(25):
+for i in range(40):
     for ind, (reps,labels) in enumerate(train):
         reps, labels = Variable(reps.float(), requires_grad=False), Variable(labels, requires_grad=False)
         optim.zero_grad()
