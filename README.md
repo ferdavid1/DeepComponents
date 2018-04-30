@@ -34,5 +34,8 @@ Image Recognition by Connected Component-based Deep Neural Networks
 - Very simple, 2-hidden-layer model with ADAM optimization, Cross-Entropy Loss, ReLU activations. 
 - Thus not-so-deep, so once I get it working on one hidden layer I'll make it two hidden layers and so forth
 
-## Future
+## Results
+- With the 51-D representation, max accuracy of 88%
+
+## Generation of Images
 - Generating Images (with noise) from 1D representation sequences 
