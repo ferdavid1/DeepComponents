@@ -31,7 +31,7 @@ def load_data(train=True):
     # upper_lim = 750 # if the big representation
     train_x = torch.from_numpy(pad_component_arrays(train_x, upper_lim))
     train = data_utils.TensorDataset(train_x, train_y)
-    train_loader = data_utils.DataLoader(train, batch_size=100, num_workers=5, shuffle=shuff)
+    train_loader = data_utils.DataLoader(train, batch_size=128, num_workers=5, shuffle=shuff)
     return train_loader, upper_lim
 
 train, upper_lim = load_data(train=True)
@@ -39,7 +39,7 @@ D_in, H, D_out = upper_lim, 200, 10
 model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e-2
-optim = optim.SGD(model.parameters(), lr=learning_rate)
+optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
 print("Started Training")
 for i in range(60):
