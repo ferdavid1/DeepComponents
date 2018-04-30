@@ -27,9 +27,8 @@ def load_data(train=True):
     train_y = torch.from_numpy(data['ImageLabels'].values)
     train_x = list(map(literal_eval, train_x))
     # upper_lim = max([len(x) for x in train_x])
-    # upper_lim = 51
-    upper_lim = 750
-    # train_x = list(map(torch.from_numpy, pad_component_arrays(train_x, upper_lim)))
+    # upper_lim = 51 # if the small representation
+    upper_lim = 750 # if the big representation
     train_x = torch.from_numpy(pad_component_arrays(train_x, upper_lim))
     train = data_utils.TensorDataset(train_x, train_y)
     train_loader = data_utils.DataLoader(train, batch_size=100, num_workers=5, shuffle=shuff)
@@ -43,7 +42,7 @@ learning_rate = 1e-2
 optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
 print("Started Training")
-for i in range(100):
+for i in range(20):
     for ind, (reps,labels) in enumerate(train):
         reps, labels = Variable(reps.float(), requires_grad=False), Variable(labels, requires_grad=False)
         optim.zero_grad()
@@ -57,18 +56,18 @@ for i in range(100):
 torch.save(model, 'model.pt')
 print('Done Training')
 
-# model = torch.load('model.pt')
-# test, ul = load_data(train=False)
+model = torch.load('model.pt')
+test, ul = load_data(train=False)
 
-# correct = 0
-# total = 0
-# print("Started Testing")
-# for index, (reps, labels) in enumerate(test):
-#     reps, labels = Variable(reps.float(), requires_grad=False), Variable(labels, requires_grad=False)
-#     y_pred = model(reps)
-#     _, predicted = torch.max(y_pred.data, 1)
-#     total += labels.size(0)
-#     correct += (predicted == labels.data).sum()
-# print("Done Testing")
+correct = 0
+total = 0
+print("Started Testing")
+for index, (reps, labels) in enumerate(test):
+    reps, labels = Variable(reps.float(), requires_grad=False), Variable(labels, requires_grad=False)
+    y_pred = model(reps)
+    _, predicted = torch.max(y_pred.data, 1)
+    total += labels.size(0)
+    correct += (predicted == labels.data).sum()
+print("Done Testing")
 
-# print('Accuracy of the network on the test images: %d %%' % (100 * correct / total))
+print('Accuracy of the network on the test images: %d %%' % (100 * correct / total))
