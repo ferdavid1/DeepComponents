@@ -39,10 +39,10 @@ D_in, H, D_out = upper_lim, 200, 10
 model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e-2
-optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
+optim = optim.SGD(model.parameters(), lr=learning_rate)
 
 print("Started Training")
-for i in range(40):
+for i in range(60):
     for ind, (reps,labels) in enumerate(train):
         reps, labels = Variable(reps.float(), requires_grad=False), Variable(labels, requires_grad=False)
         optim.zero_grad()
