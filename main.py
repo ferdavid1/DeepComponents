@@ -35,8 +35,8 @@ def load_data(train=True):
     return train_loader, upper_lim
 
 train, upper_lim = load_data(train=True)
-D_in, H, D_out = upper_lim, 256, 10 
-model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.Dropout(0.5), torch.nn.ReLU(), torch.nn.Linear(H, 128), torch.nn.Dropout(0.5), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
+D_in, H, D_out = upper_lim, 200, 10 
+model = torch.nn.Sequential(torch.nn.Linear(D_in, H), torch.nn.Dropout(0.4), torch.nn.ReLU(), torch.nn.Linear(H, 100), torch.nn.Dropout(0.3), torch.nn.ReLU(), torch.nn.Linear(100, D_out))
 loss = torch.nn.CrossEntropyLoss()
 learning_rate = 1e-2
 optim = optim.RMSprop(model.parameters(), lr=learning_rate, momentum=0.9)
