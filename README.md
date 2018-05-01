@@ -39,6 +39,3 @@ Image Recognition by Connected Component-based Deep Neural Networks
 ## Generation of Images
 - Generating Images (with noise) from 1D representation sequences 
 - Under Visualizations/generated
-
-## Future
-- Use persistent homology of the nonzeroed morse function to classify numbers. 
