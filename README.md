@@ -8,7 +8,7 @@ Image Recognition by Connected Component-based Deep Neural Networks
 - In this connected-component-image-vector, for each row of the representation, a row with no connected components is mapped to a 0, and a row with connected components has the lengths of those connected components mapped to an element of the connected-component-image vector with the same value. 
 - Thus for each MxN image there exists an N-dimensional vector which represents the image
 - MNIST data is 784-dimensional. 
-- This process reduces dimensionality of MNIST to 28-dimensional at first, and then 28-x dimensional, where x is the number of zeros in the N-vector.
+- This process reduces dimensionality of MNIST to 51-D at most, and 21-D at least 
 - In the future, I will train the algorithm on the noisier augmented-MNIST dataset. 
 
 ## Morse Function Representation
@@ -31,11 +31,14 @@ Image Recognition by Connected Component-based Deep Neural Networks
 
 ## Neural Network
 - PyTorch
-- Very simple, 2-hidden-layer model with ADAM optimization, Cross-Entropy Loss, ReLU activations. 
-- Thus not-so-deep, so once I get it working on one hidden layer I'll make it two hidden layers and so forth
+- Very simple, 2-hidden-layer model with SGD optimization and momentum, Cross-Entropy Loss, ReLU activations. 
 
 ## Results
 - With the 51-D representation, max accuracy of 88%
 
 ## Generation of Images
 - Generating Images (with noise) from 1D representation sequences 
+- Under Visualizations/generated
+
+## Future
+- Use persistent homology of the nonzeroed morse function to classify numbers. 
