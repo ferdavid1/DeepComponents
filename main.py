@@ -28,7 +28,9 @@ def load_data(train=True):
     train_x = list(map(literal_eval, train_x))
     train_y = torch.from_numpy(train_y)
     upper_lim = 51 # if the small representation
+    # upper_lim = 209 # if medium representation (inbetween zeros)
     # upper_lim = 750 # if the big representation
+    # print(max([len(x) for x in train_x]))
     train_x = torch.from_numpy(pad_component_arrays(train_x, upper_lim))
     train = data_utils.TensorDataset(train_x, train_y)
     train_loader = data_utils.DataLoader(train, batch_size=100, num_workers=5, shuffle=shuff)
@@ -42,7 +44,7 @@ learning_rate = 1e-2
 optim = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
 print("Started Training")
-for i in range(20):
+for i in range(25):
     for ind, (reps,labels) in enumerate(train):
         reps, labels = Variable(reps.float(), requires_grad=False), Variable(labels, requires_grad=False)
         optim.zero_grad()
