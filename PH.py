@@ -33,7 +33,7 @@ def morse(image_array): # plot image values as a signal, turned into a morse fun
 		connected_components.append(ccs)
 	new_connected = []
 	for c in connected_components:
-		if c == []:
+		if np.count_nonzero(c) == 0:
 			new_connected.append(0)
 		else:
 			for x in c:
@@ -53,4 +53,4 @@ def make_dataset():
 	df.to_csv('ImageTopologyDataset.csv', index=False)
 	# df.to_csv('ImageTopologyTesting.csv', index=False)
 
-# make_dataset()
+make_dataset()
