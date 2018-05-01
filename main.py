@@ -15,6 +15,9 @@ def pad_component_arrays(x, upper_lim):
         output_x.append(array)
     return np.array(output_x)
 
+def persistence():
+    pass
+    
 def load_data(train=True):
     # loading the dataset of morse functions of each number representation
     if train:
