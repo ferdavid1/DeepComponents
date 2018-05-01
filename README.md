@@ -37,5 +37,5 @@ Image Recognition by Connected Component-based Deep Neural Networks
 - With the 51-D representation, max accuracy of 88%
 
 ## Generation of Images
-- Generating Images (with noise) from 1D representation sequences 
+- Generating Images (with noise) from 51-D representation sequences 
 - Under Visualizations/generated
